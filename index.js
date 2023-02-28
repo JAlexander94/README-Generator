@@ -13,17 +13,22 @@ const questions = [
     {
         type: 'input',
         name: 'description',
-        message: 'Provide a short description explaining the what, why, and how of your project.\nUse the following questions as a guide:\n- What was your motivation?\n- Why did you build this project?\n- What problem does it solve?\n- What did you learn?',
+        message: 'Provide a short description explaining the what, why, and how of your project:',
     },
     {
         type: 'input',
         name: 'installation',
-        message: 'Provide a step-by-step description of how to get the development environment running:',
+        message: 'What are the steps required to install your project?',
     },
     {
         type: 'input',
         name: 'usage',
-        message: '',
+        message: 'Provide instructions and examples for use:',
+    },
+    {
+        type: 'input',
+        name: 'usage1',
+        message: 'Provide a link to your application:',
     },
     {
         type: 'list',
@@ -33,7 +38,7 @@ const questions = [
     },
     {
         type: 'input',
-        name: 'contribution',
+        name: 'contributing',
         message: 'Provide a description of how other developers may contribute:',
     },
     {
@@ -56,7 +61,7 @@ const questions = [
 
 // function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, JSON.stringify(data, null, '\n'), (err) =>
+    fs.writeFile(fileName, data, (err) =>
       err ? console.log(err) : console.log('Success!')
     )
 }
@@ -65,9 +70,8 @@ function writeToFile(fileName, data) {
 function init() {
     inquirer.prompt(questions)
     .then((data)=>{
-        generateMarkdown(data)
-        const fileName = `${data.title.toLowerCase().split(' ').join('')}.md`
-        writeToFile(fileName, data)
+        const fileName = `README.md`
+        writeToFile(fileName, generateMarkdown(data))
     })
 }
 
